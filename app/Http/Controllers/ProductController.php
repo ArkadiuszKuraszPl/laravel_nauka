@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\ProductCategory;
 use App\Http\Requests\UpsertProductRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -32,7 +33,9 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        return view("products.create");
+        return view("products.create", [
+            'categories' => ProductCategory::all()
+        ]);
     }
 
     /**
@@ -73,7 +76,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         return view("products.edit", [
-            'product' => $product
+            'product' => $product,
+            'categories' => ProductCategory::all()
         ]);
     }
 
@@ -89,6 +93,7 @@ class ProductController extends Controller
         $product->fill($request->validated());
         if($request->hasFile('image')) {
             $product->image_path = $request->file('image')->store('products');
+            
         }
         $product->save();
         return redirect(route('products.index'));
