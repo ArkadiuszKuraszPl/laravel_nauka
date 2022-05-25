@@ -1,6 +1,12 @@
 <?php
 
 return [
+    'welcome' => [
+        'products' => 'Produkty',
+        'categories' => 'Kategorie',
+        'price' => 'Cena',
+        'filter' => "Filtruj"
+    ],
     'columns' => [
         'actions' => 'Akcje'
     ],
@@ -25,4 +31,4 @@ return [
             'category' => 'Kategoria',
         ]
     ]
-];
+]; 
