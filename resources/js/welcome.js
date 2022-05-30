@@ -6,7 +6,33 @@ $(function() {
     });
 
     $('a#filter-button').click(function() {
+        event.preventDefault();
         getProducts($('a.products-actual-count').text());
+    });
+
+    $('button.add-cart-button').click(function() {
+        event.preventDefault();
+        $.ajax({
+            method: "POST",
+            url: WELCOME_DATA.addToCart + $(this).data('id')
+        })
+        .done(function() {
+            Swal.fire({
+                title: 'Brawo!',
+                text: 'Produkt dodany do koszyka',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: '<i class="fa-solid fa-cart-plus"></i> Przejdź do koszyka',
+                cancelButtonText: '<i class="fa-solid fa-bag-shopping"></i> Kontynuuj zakupy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = WELCOME_DATA.listCart;
+                }
+            })
+        })
+        .fail(function () {
+            Swal.fire('Oops...', 'Wystąpił błąd', 'error');
+        });
     });
 
     function getProducts(paginate) {
@@ -32,6 +58,9 @@ $(function() {
                             '<h5 class="card-price small">' + 
                                 '<i>PLN ' + product.price + '</i>' + 
                             '</h5>' + 
+                            '<button class="btn btn-success btn-sm add-cart-button"' + getDisabled() + ' data-id="' + product.id + '">' +
+                                '<i class="fas fa-cart-plus"></i> Dodaj do koszyka' + 
+                            '</button>' +
                         '</div>' + 
                     '</div>' + 
                 '</div>';
@@ -42,8 +71,15 @@ $(function() {
 
     function getImage(product) {
         if(!!product.image_path) {
-            return storagePath + product.image_path;
+            return WELCOME_DATA.storagePath + product.image_path;
         }
-        return defaultImage;
+        return WELCOME_DATA.defaultImage;
+    }
+
+    function getDisabled() {
+        if (WELCOME_DATA.isGuest) {
+            return ' disabled';
+        }
+        return '';
     }
 });

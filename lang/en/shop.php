@@ -22,6 +22,17 @@ return [
         'edit_title' => 'Editing a product: :name',
         'show_title' => 'Product preview',
         'index_title' => 'List of products',
+        'status' => [
+            'store' => [
+                'success' => 'Product saved!',
+            ],
+            'update' => [
+                'success' => 'Product updated!',
+            ],
+            'delete' => [
+                'success' => 'Product removed!',
+            ],
+        ],
         'fields' => [
             'name' => 'Name',
             'description' => 'Description',

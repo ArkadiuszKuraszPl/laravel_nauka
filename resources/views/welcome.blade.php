@@ -22,11 +22,11 @@
                             <button type="button" class="btn btn-lg btn-light"> <span class="fa fa-arrow-right"></span> </button>
                         </div>
                         <div class="">
-                            <a class="btn btn-lg btn-ligh products-actual-count" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">4</a>
+                            <a class="btn btn-lg btn-ligh products-actual-count" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">10</a>
                             <div class="products-count">
-                                <a class="" href="#">4</a>
-                                <a class="" href="#">6</a>
-                                <a class="" href="#">8</a>
+                                <a class="" href="#">10</a>
+                                <a class="" href="#">25</a>
+                                <a class="" href="#">50</a>
                             </div>
                         </div>
                     </div>
@@ -50,6 +50,8 @@
                                 <i>PLN {{ $product->price }}</i>
                                 </h5>
                             </div>
+                            <button type="button" class="btn btn-sm btn-success add-cart-button" data-id="{{ $product->id }}" @guest disabled @endguest><i class="fa-solid fa-cart-plus"></i> Dodaj do koszyka
+                            </button>
                         </div>
                     </div>
                     @endforeach
@@ -93,9 +95,13 @@
     </div>
 @endsection
 @section('javascript')
-    const storagePath = '{{ asset('storage') }}/';
-    const defaultImage = '{{ $defaultImage }}';
-
+    const WELCOME_DATA = {
+        storagePath: '{{ asset('storage') }}/',
+        defaultImage: '{{ $defaultImage }}',
+        addToCart: '{{ url('cart') }}/',
+        listCart: '{{ url('cart') }}',
+        isGuest: '{{ $isGuest }}'
+    }
 @endsection
 @section('js-files')
     <script src="{{ asset("js/welcome.js") }}"></script>
